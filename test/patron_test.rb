@@ -4,7 +4,7 @@ require './lib/patron.rb'
 class PatronTest < Minitest::Test
 
   def setup
-    @patron_1 = Patron.new
+    @patron_1 = Patron.new("Bob", 20)
   end
 
   def test_it_exists

@@ -93,4 +93,19 @@ class MuseumTest < Minitest::Test
     assert_equal [@patron_1, @patron_3], @dmns.ticket_lottery_contestants(@dead_sea_scrolls)
   end
 
+  def test_it_can_draw_lottery_winner
+    @dmns.add_exhibit(@gems_and_minerals)
+    @dmns.add_exhibit(@dead_sea_scrolls)
+    @dmns.add_exhibit(@imax)
+    @patron_1.add_interest("Dead Sea Scrolls")
+    @patron_1.add_interest("Gems and Minerals")
+    @patron_2.add_interest("IMAX")
+    @patron_3.add_interest("Dead Sea Scrolls")
+    @dmns.admit(@patron_1)
+    @dmns.admit(@patron_2)
+    @dmns.admit(@patron_3)
+    @dmns.stubs(:draw_lottery_winner).returns(@patron_1.name)
+    assert_equal "Bob has won the Dead Sea Scrolls exhibit lottery", @dmns.announce_lottery_winner(@dead_sea_scrolls)
+  end
+
 end
